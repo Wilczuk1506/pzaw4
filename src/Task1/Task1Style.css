@@ -1,0 +1,10 @@
+.post{
+    margin: 2px;
+    border: solid black 3px;
+}
+
+.gallery{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
