@@ -26,3 +26,7 @@ SCI_router.get("/json", (req, res) => {
 application.use("/sci", SCI_router)
 
 application.listen(8000, () => {console.log("server status")});
+
+application.post('/task02/data', (req, res) => {
+    res.send(200);
+});

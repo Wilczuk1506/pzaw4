@@ -13,7 +13,7 @@ function Gallery(){
             </div>
             <div className="gallery">
                 {
-                    json.slice(0, slider).map((e) => {
+                    json.slice(0, slider).map((e, index) => {
                         var tempTitle = "";
                         if (e.title.length > 15){
                             tempTitle = e.title.slice(0, 12) + "...";
@@ -41,7 +41,7 @@ function Gallery(){
                         }
 
                         return (
-                            <Post title={tempTitle} description={tempDesc} imgSrc={"./icons/Icon14_" + tempImg + ".png"}/>
+                            <Post key={index} title={tempTitle} description={tempDesc} imgSrc={"./icons/Icon14_" + tempImg + ".png"}/>
                         );
                     })
                 }
