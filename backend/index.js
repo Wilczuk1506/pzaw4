@@ -1,32 +1,52 @@
 const express = require("express");
+import cors from "cors";
 
 const application = express();
 
-application.get("/", (request, response) => {response.send("<div>Kanapka</div>");});
+application.use(cors())
+application.use(express.json())
 
-application.post("/abc", (request, response) => { response.statusCode = 500; response.send("<div>asdasd</div>");});
+import pokedex from "./pokedex/pokedex.json";
+import types from "./pokedex/types.json";
 
-application.delete("/abc", (request, response) => {response.send("<div>ledetee</div>");});
+let arr = []
 
-// sci/4c/abc
 
-const SCI_router = express.Router();
-SCI_router.get("/", (request, response) => {response.send("<div>sci</div>");})
-
-SCI_router.get("/json", (req, res) => {
-    const data = [{
-        "key1" : "text",
-        "key2" : 69
-    }]
-
-    res.json(data);
+application.get('/task02/data', (req, res) => {
+    res.status(200).json(arr);
 });
 
 
-application.use("/sci", SCI_router)
+application.post('/task02/data', (req, res) => {
+    arr.push(req.body)
+
+    res.sendStatus(200);
+});
+
+const task3_router = express.Router();
+
+task3_router.get("/types", (req, res) => {
+
+});
+
+task3_router.get("/", (req, res) => {
+    pokemons[req.params.id]
+});
+
+task3_router.get("/types", (req, res) => {
+    
+});
+
+task3_router.get("/imgs", (req, res) => {
+    
+});
+
+task3_router.get("", (req, res) => {
+    
+});
+
+task3.use("/task3/pokemon", task3_router);
+
 
 application.listen(8000, () => {console.log("server status")});
 
-application.post('/task02/data', (req, res) => {
-    res.send(200);
-});

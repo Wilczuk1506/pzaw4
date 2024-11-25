@@ -6,23 +6,30 @@ function Task2(){
     const [name, SetName] = useState("");
     const [surname, SetSurname] = useState("");
     const [number, SetNumber] = useState(0);
-    const [checkbox1, SetCheckbox1] = useState(false);
-    const [checkbox2, SetCheckbox2] = useState(false);
-    const [checkbox3, SetCheckbox3] = useState(false);
+    const [checkbox, setCheckbox] = useState([]);
+
     const [gender, SetGender] = useState("");
 
     const Submit = () => {
-        axios.post("http://localhost:2000/task02/data", {
+        const data = {
             name: name,
             surname: surname,
             number: number,
-            check1: checkbox1,
-            check2: checkbox2,
-            check3: checkbox3,
+            check: checkbox,
             gender: gender,
-        })
+        };
+
+        console.log(data);
+
+        axios.post("http://localhost:8000/task02/data", data)
         .then((res) => {console.log(res)})
         .catch((err) => {console.log(err)});
+    }
+
+    const handleCheckbox = (e) => {
+        e.checked ? 
+            setCheckbox([...checkbox, e.value]) : 
+            setCheckbox(checkbox.filter(x => x !== e.value))
     }
 
     return (
@@ -33,18 +40,18 @@ function Task2(){
             <br/>
             Liczba <input type="number" onChange={(e) => {SetNumber(e.target.value)}}/>
             <br/>
-            1? <input type="checkbox" onChange={(e) => {SetCheckbox1(e.target.value)}}/>
+            1? <input type="checkbox" value="1" onChange={(e) => {handleCheckbox(e.target)}}/>
             <br/>
-            2? <input type="checkbox" onChange={(e) => {SetCheckbox2(e.target.value)}}/>
+            2? <input type="checkbox" value="2" onChange={(e) => {handleCheckbox(e.target)}}/>
             <br/>
-            3? <input type="checkbox" onChange={(e) => {SetCheckbox3(e.target.value)}}/>
+            3? <input type="checkbox" value="3" onChange={(e) => {handleCheckbox(e.target)}}/>
             <br/>
             Męskoosobowy: <input type="radio" name="gender" value="mail" onChange={(e) => {SetGender(e.target.value)}}/>
             <br/>
             Niemęskoosobowy: <input type="radio" name="gender" value="email" onChange={(e) => {SetGender(e.target.value)}}/>
             <br/>
             Innoosobowy: <input type="radio" name="gender" value="gmail" onChange={(e) => {SetGender(e.target.value)}}/>
-            <button type='button' onClick={Submit}>lets go</button>
+            <input type='button' onClick={Submit} className="btn" value="lets go" />
         </div>
     );
 }
