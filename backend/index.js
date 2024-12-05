@@ -36,6 +36,10 @@ task3_router.get("/types", (req, res) => {
     res.status(200).json(types);
 });
 
+task3_router.get("/all", (req, res) => {
+    res.status(200).json(pokedex);
+});
+
 task3_router.get("/:id", (req, res) => {
     res.status(200).json(pokedex.find((x) => x.id === Number(req.params.id)));
 });
@@ -48,7 +52,7 @@ task3_router.get("/image/:id", (req, res) => {
     res.status(200).send(base64_encode(`./pokedex/images/${(req.params.id).padStart(3, '0')}.png`));
 });
 
-task3_router.get("", (req, res) => {
+task3_router.get("/", (req, res) => {
     res.status(200).json(pokedex.filter(pokemon => req.query.types.every(type => pokemon.type.includes(type))));
 });
 

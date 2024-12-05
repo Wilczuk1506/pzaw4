@@ -1,0 +1,24 @@
+.CheckboxBox{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 10px;
+    border: 1px black solid;
+    margin: 5px;
+}
+.ShownPokemons{
+    margin: 5px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 50px;
+}
+.PokemonCard > img{
+    height: 150px;
+}
+
+.PokemonCard{
+    height: 300px;
+    padding: 10px;
+    border: solid 1px black;
+    text-align: center;
+}

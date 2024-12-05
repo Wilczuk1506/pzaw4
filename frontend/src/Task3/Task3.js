@@ -1,22 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import './style.css';
+import PokemonCard from './PokemonCard';
 
 function Task3(){
     const [pokemonTypes, setPokemonTypes] = useState([]);
-
-    const [pokemonId, setPokemonId] = useState(Number);
-    const [pokemonFromId, setPokemonFromId] = useState({});
-    const [imgUrlFromId, setImgUrlFromId] = useState();
-
-    const [pokemonType, setPokemonType] = useState(String);
-    const [pokemonsFromType, setPokemonsFromType] = useState([])
-
+    const [shownPokemons, setShownPokemons] = useState([]);
     
-    //Pokemon types
+    //Pokemon types and all pokemons
     useEffect(() => {
-        setPokemonId(1);
-        setPokemonType("Fire");
-
         axios.get("http://localhost:8000/task3/pokemon/types")
         .then((response) => {
             setPokemonTypes(response.data);
@@ -24,72 +16,35 @@ function Task3(){
         .catch((error) => {
             console.error(":c", error);
         })
-    }, [pokemonType]);
 
-    //Pokemon from id
-    useEffect(() => {
-        //info
-        axios.get(`http://localhost:8000/task3/pokemon/${pokemonId}`)
+        axios.get("http://localhost:8000/task3/pokemon/all")
         .then((response) => {
-            setPokemonFromId(response.data);
+            setShownPokemons(response.data);
         })
         .catch((error) => {
             console.error(":c", error);
         })
-
-        //img
-        axios.get(`http://localhost:8000/task3/pokemon/image/3`)
-        .then((response) => {
-            setImgUrlFromId(response.data);
-        })
-        .catch((error) => {
-            console.error(":c", error);
-        })
-    }, [pokemonId]);
-
-    //Pokemons from type
-    useEffect(() => {
-        axios.get(`http://localhost:8000/task3/pokemon/type/${pokemonType}`)
-        .then((response) => {
-            if (typeof(response.data) !== "string")
-                setPokemonsFromType(response.data);
-        })
-        .catch((error) => {
-            console.error(":c", error);
-        })
-    }, [pokemonType]);
+    }, []);
 
     return (
         <div>
             {/* pokemon types */}
-            <div>
+            <div className='CheckboxBox'>
                 {
                     pokemonTypes.map((e, index) => {
                         return (
-                            e.english
+                            <span className='Checkbox' key={index}>
+                                {e.english}
+                                <input type='checkbox' defaultChecked={true} value={e.english}/>
+                            </span>
                         )
                     })
                 }
             </div>
-
-            {/* from type */}
-            <div>
+            
+            <div className='ShownPokemons'>
                 {
-                    pokemonsFromType.map((e, index) => {
-                        return (
-                            e.name.english
-                        )
-                    })
-                }
-            </div>
-
-            {/* from id */}
-            <div>
-                {
-                    pokemonFromId?.name?.english
-                }
-                {
-                    imgUrlFromId ? ( <img src={`data:image/png;base64, ${imgUrlFromId}`} alt='oopsie'/> ) : null
+                    shownPokemons.map((e, index) => <PokemonCard pokemon={e} /> )
                 }
             </div>
         </div>
