@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-function PokemonCard({pokemon}){
+function PokemonCard({pokemon, onClick}){
 
     const [pokemonImg, setPokemonImg] = useState();
 
@@ -16,8 +16,9 @@ function PokemonCard({pokemon}){
     }, [pokemon])
 
     return (
-        <div className='PokemonCard' key={pokemon.id}>
+        <div className='PokemonCard' key={pokemon.id} onClick={onClick} >
             {pokemonImg && <img src={`data:image/png;base64, ${pokemonImg}`} alt={`${pokemon?.name.english} img`}/>}
+            {pokemon.name.english}
         </div>
     )
 }
