@@ -1,0 +1,7 @@
+FrontEnd:
+	npm i
+	npm i @tanstack/react-query
+	npm i @tanstack/react-form
+Backend:
+	npm i nodemon
+	npm install bcrypt
