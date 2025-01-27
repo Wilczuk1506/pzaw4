@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const fs = require('fs');
+const bcrypt = require('bcrypt');
 
 const application = express();
 
@@ -29,8 +30,6 @@ function base64_encode(file) {
 
 const types = require("./pokedex/types.json");
 const pokedex = require("./pokedex/pokedex.json");
-const { constrainedMemory } = require("process");
-const { match } = require("assert");
 
 const task3_router = express.Router();
 
@@ -72,6 +71,30 @@ task3_router.get("", (req, res) => {
     )
     
     res.status(200).json(returnData);
+});
+
+//task 4
+
+const usersInfo = [];
+
+application.get("/task04/users", (req, res) => {
+    res.status(200).json(usersInfo);
+})
+
+application.post("/task04/users/register", (req, res) => {
+    const {name, email, password, school} = req.body;
+
+    const salt = bcrypt.genSaltSync(10);
+    const passwordHashed = bcrypt.hashSync(password, salt);
+
+    usersInfo.push({
+        Name: name,
+        Email: email,
+        Password: passwordHashed,
+        School: school,
+    });
+    console.log(usersInfo);
+    res.sendStatus(201);
 });
 
 application.use("/task3/pokemon", task3_router);

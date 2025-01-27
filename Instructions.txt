@@ -7,5 +7,5 @@ FrontEnd:
 	npm start
 Backend:
 	npm i nodemon
-	npm install bcrypt
+	npm i bcrypt
 	npm start	
