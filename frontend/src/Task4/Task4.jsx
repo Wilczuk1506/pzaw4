@@ -52,7 +52,7 @@ function Task4(){
     }
 
     const schoolValidators = {
-        onchange: ({ value }) => {
+        onChange: ({ value }) => {
             return undefined;
         }
     }

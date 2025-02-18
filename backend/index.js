@@ -69,7 +69,7 @@ task3_router.get("", (req, res) => {
             return matchesName && matchesTypes;
         }
     )
-    
+
     res.status(200).json(returnData);
 });
 
@@ -97,8 +97,30 @@ application.post("/task04/users/register", (req, res) => {
     res.sendStatus(201);
 });
 
-application.use("/task3/pokemon", task3_router);
+//Task 5
 
+const employees = require('./Task5/_data_17022025.json')
+
+application.get("/task5/employees", (req, res) => {
+
+    const name = req.query.name;
+    const salary = req.query.salary;
+    const greater = req.query.greater === "true" ? true : false;
+
+    const resultData = employees.employees.filter((emp) => {
+
+        const nameSearch = emp.first_name.toLowerCase().includes(name.toLowerCase()) ? true : false;
+        const surnameSearch = emp.last_name.toLowerCase().includes(name.toLowerCase()) ? true : false;
+
+        const salarySearch = greater ? emp.salary > salary : emp.salary < salary;
+
+        return (nameSearch || surnameSearch) && salarySearch;
+    });
+
+    res.status(200).json(resultData);
+});
+
+application.use("/task3/pokemon", task3_router);
 
 application.listen(8000, () => {console.log("server status")});
 
