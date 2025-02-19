@@ -3,7 +3,8 @@ import axios from 'axios';
 import Verse from "./Verse";
 function Task5(){
 
-    const [employees, setEmployees] = useState(undefined);
+    const [employeesData, setEmployeesData] = useState([]);
+    const [employees, setEmployees] = useState([]);
 
     const [currentCLicked, setCurrentClicked] = useState(-1);
 
@@ -12,20 +13,29 @@ function Task5(){
     const [isGreater, setIsGreater] = useState(true);
 
     useEffect(() => {
-        axios.get("http://localhost:8000/task5/employees", {
-            params: {
-                name: nameSearch,
-                salary: salarySearch,
-                greater: isGreater,
-            }
-        })
+        axios.get("http://localhost:8000/task5/employees")
         .then((res) => {
+            setEmployeesData(res.data);
             setEmployees(res.data);
         })
         .catch((err) => {
             console.error(":c", err);
         });
-    }, [nameSearch, salarySearch, isGreater]);
+    }, []);
+
+    useEffect(() => {
+        const resultData = employeesData.filter((emp) => {
+
+            const nameCheck = emp.first_name.toLowerCase().includes(nameSearch.toLowerCase()) ? true : false;
+            const surnameCheck = emp.last_name.toLowerCase().includes(nameSearch.toLowerCase()) ? true : false;
+
+            const salaryCheck = isGreater ? emp.salary > salarySearch : emp.salary < salarySearch;
+
+            return (nameCheck || surnameCheck) && salaryCheck;
+        });
+
+        setEmployees(resultData);
+    }, [nameSearch, salarySearch, isGreater, employeesData]);
 
 
 
