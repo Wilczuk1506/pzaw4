@@ -72,6 +72,7 @@ task3_router.get("", (req, res) => {
 
     res.status(200).json(returnData);
 });
+application.use("/task3/pokemon", task3_router);
 
 //task 4
 
@@ -105,7 +106,13 @@ application.get("/task5/employees", (req, res) => {
     res.status(200).json(employees.employees);
 });
 
-application.use("/task3/pokemon", task3_router);
+//Task6
+// import data from './Task6/_data.json' with {type: 'json'};
+const data = require('./Task6/_data.json');
+
+application.get('/Task6/', (req, res) => {
+    res.status(200).json(data);
+});
 
 application.listen(8000, () => {console.log("server status")});
 
